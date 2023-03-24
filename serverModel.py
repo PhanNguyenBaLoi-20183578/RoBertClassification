@@ -1,24 +1,12 @@
 
 import torch
-import numpy as np
-import pandas as pd
-
-import matplotlib.pyplot as plt
-
-from gensim.utils import simple_preprocess
-from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import classification_report, confusion_matrix
 import torch.nn as nn
-from torch.optim import AdamW
-from torch.utils.data import Dataset, DataLoader
 from transformers import  AutoTokenizer, AutoModel, logging
 import warnings
 warnings.filterwarnings("ignore")
 logging.set_verbosity_error()
-
 from flask import Flask, request
 import json
-
 class SentimentClassifier(nn.Module):
     def __init__(self, n_classes):
         super(SentimentClassifier, self).__init__()
@@ -34,7 +22,6 @@ class SentimentClassifier(nn.Module):
             attention_mask=attention_mask,
             return_dict=False # Dropout will errors if without this
         )
-
         x = self.drop(output)
         x = self.fc(x)
         return x
